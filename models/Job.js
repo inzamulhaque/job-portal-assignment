@@ -50,8 +50,8 @@ const jobSchema = mongoose.Schema(
 
     appliedBy: [
       {
-        id: ObjectId,
-        ref: "Jobs",
+        type: ObjectId,
+        ref: "User",
       },
     ],
 

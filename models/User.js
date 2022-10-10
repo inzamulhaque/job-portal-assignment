@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Schema.Types;
 const validator = require("validator");
 const crypto = require("crypto");
-
 const bcrypt = require("bcryptjs");
 
 const userSchema = mongoose.Schema(
@@ -32,21 +31,21 @@ const userSchema = mongoose.Schema(
       },
     },
 
-    confirmPassword: {
-      type: String,
-      required: [true, "Please confirm your password"],
-      validate: {
-        validator: function (value) {
-          return value === this.password;
-        },
-        message: "Passwords don't match!",
-      },
-    },
+    // confirmPassword: {
+    //   type: String,
+    //   required: [true, "Please confirm your password"],
+    //   validate: {
+    //     validator: function (value) {
+    //       return value === this.password;
+    //     },
+    //     message: "Passwords don't match!",
+    //   },
+    // },
 
     role: {
       type: String,
-      enum: ["Candidate", "hiring-manager", "admin"],
-      default: "buyer",
+      enum: ["candidate", "hiring-manager", "admin"],
+      default: "candidate",
     },
 
     name: {
@@ -78,15 +77,15 @@ const userSchema = mongoose.Schema(
 
     appliedJobs: [
       {
-        id: ObjectId,
-        ref: "Jobs",
+        type: ObjectId,
+        ref: "Job",
       },
     ],
 
     createdJobs: [
       {
-        id: ObjectId,
-        ref: "Jobs",
+        type: ObjectId,
+        ref: "Job",
       },
     ],
 
@@ -99,15 +98,18 @@ const userSchema = mongoose.Schema(
 );
 
 userSchema.pre("save", function (next) {
-  const password = this.password;
-  const hashedPassword = bcrypt.hashSync(password);
-  this.password = hashedPassword;
+  // const password = this.password;
+
+  // const hashedPassword = bcrypt.hashSync(password);
+
+  // this.password = hashedPassword;
   this.confirmPassword = undefined;
   next();
 });
 
 userSchema.methods.comparePassword = function (password, hash) {
   const isPasswordValid = bcrypt.compareSync(password, hash);
+  console.log(isPasswordValid, password, hash);
   return isPasswordValid;
 };
 
