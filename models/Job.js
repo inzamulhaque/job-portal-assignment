@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Schema.Types;
 const validator = require("validator");
 const crypto = require("crypto");
+const date = new Date();
+date.setDate(date.getDate() + 5);
 
 const jobSchema = mongoose.Schema(
   {
@@ -52,6 +54,12 @@ const jobSchema = mongoose.Schema(
         ref: "Jobs",
       },
     ],
+
+    deadline: {
+      type: Date,
+      required: [true, "Please provide a deadline"],
+      default: date,
+    },
 
     confirmationToken: String,
     confirmationTokenExpires: Date,
