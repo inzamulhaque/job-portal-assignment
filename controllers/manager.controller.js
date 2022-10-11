@@ -1,39 +1,41 @@
 const {
-  createJobServices,
-  updateJobServices,
-} = require("../services/job.services");
+  getAllJobsServices,
+  getJobByIdServices,
+} = require("../services/manager.services");
 
-const createNewJob = async (req, res, next) => {
+const getAllJobs = async (req, res) => {
   try {
-    const job = await createJobServices(req.body);
+    const email = req.user.email;
+    const jobs = await getAllJobsServices(email);
 
-    if (!job) {
+    if (!jobs) {
       return res.status(500).json({
         status: "fail",
-        message: "Couldn't create job",
+        message: "Couldn't get job",
         error: error.message,
       });
     }
 
-    res.status(201).json({
+    res.status(200).json({
       status: "ok",
-      message: "successfully created job",
-      job,
+      message: "successfully get jobs",
+      jobs,
     });
   } catch (error) {
     res.status(500).json({
       status: "fail",
-      message: "Couldn't create job",
+      message: "Couldn't get job",
       error: error.message,
     });
   }
 };
 
-const updateJobById = async (req, res) => {
+const getJobById = async (req, res) => {
   try {
     const { id } = req.params;
-    const data = req.body;
-    const job = await updateJobServices(id, data);
+    const email = req.user.email;
+    const job = await getJobByIdServices(email, id);
+
     if (!job) {
       return res.status(400).json({
         status: "fail",
@@ -42,9 +44,10 @@ const updateJobById = async (req, res) => {
       });
     }
 
-    res.status(201).json({
+    res.status(200).json({
       status: "ok",
-      message: "successfully updated job",
+      message: "successfully get job",
+      job,
     });
   } catch (error) {
     res.status(400).json({
@@ -55,4 +58,4 @@ const updateJobById = async (req, res) => {
   }
 };
 
-module.exports = { createNewJob, updateJobById };
+module.exports = { getAllJobs, getJobById };

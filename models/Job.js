@@ -7,13 +7,14 @@ date.setDate(date.getDate() + 5);
 const jobSchema = mongoose.Schema(
   {
     createdBy: {
-      name: {
+      email: {
         type: String,
+        validate: [validator.isEmail, "Provide a valid Email"],
         required: [true, "Please provide a Hiring Manager name"],
       },
       id: {
         type: ObjectId,
-        ref: "Users",
+        ref: "User",
         required: [true, "Please provide a Hiring Manager id"],
       },
     },
@@ -50,10 +51,17 @@ const jobSchema = mongoose.Schema(
     appliedBy: [
       {
         name: String,
+
         id: {
           type: ObjectId,
           ref: "User",
         },
+
+        // applicationId: {
+        //   type: ObjectId,
+        //   ref: "Application",
+        // },
+
         date: {
           type: Date,
           default: new Date(),
