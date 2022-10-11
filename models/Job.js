@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Schema.Types;
 const validator = require("validator");
-const crypto = require("crypto");
 const date = new Date();
 date.setDate(date.getDate() + 5);
 
@@ -13,7 +12,7 @@ const jobSchema = mongoose.Schema(
         required: [true, "Please provide a Hiring Manager name"],
       },
       id: {
-        id: ObjectId,
+        type: ObjectId,
         ref: "Users",
         required: [true, "Please provide a Hiring Manager id"],
       },
@@ -50,8 +49,15 @@ const jobSchema = mongoose.Schema(
 
     appliedBy: [
       {
-        type: ObjectId,
-        ref: "User",
+        name: String,
+        id: {
+          type: ObjectId,
+          ref: "User",
+        },
+        date: {
+          type: Date,
+          default: new Date(),
+        },
       },
     ],
 
@@ -69,6 +75,6 @@ const jobSchema = mongoose.Schema(
   }
 );
 
-const Job = mongoose.model("User", jobSchema);
+const Job = mongoose.model("Job", jobSchema);
 
 module.exports = Job;
