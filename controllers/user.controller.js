@@ -146,4 +146,23 @@ const loginUser = async (req, res) => {
   }
 };
 
-module.exports = { signupUser, verifyUser, loginUser };
+const getMe = async (req, res, next) => {
+  try {
+    const { email } = req.user || {};
+    const user = await findUserByEmail(email);
+    const { password: pass, ...others } = user.toObject();
+
+    res.status(200).json({
+      status: "success",
+      user: others,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "fail",
+      message: "Couldn't get User",
+      error: error.message,
+    });
+  }
+};
+
+module.exports = { signupUser, verifyUser, loginUser, getMe };
