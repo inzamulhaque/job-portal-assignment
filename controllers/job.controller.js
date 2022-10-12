@@ -138,11 +138,31 @@ const updateJobById = async (req, res) => {
 const applyJob = async (req, res) => {
   try {
     const { email } = req.user || {};
+    const { id } = req.params;
     const resume = req.resumeName;
-    console.log(resume);
+
     const user = await findUserByEmail(email);
 
-    const application = await applicationServices(user, req.body, resume);
+    const application = await applicationServices(user, req.body, resume, id);
+
+    if (!application) {
+      return res.status(500).json({
+        status: "fail",
+        message: "Couldn't get job with this id",
+      });
+    }
+
+    if (application === "Already Applied") {
+      return res.status(400).json({
+        status: "fail",
+        message: "Already Applied",
+      });
+    }
+
+    res.status(200).json({
+      status: "success",
+      application,
+    });
   } catch (error) {
     res.status(500).json({
       status: "fail",

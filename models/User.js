@@ -71,7 +71,7 @@ const userSchema = mongoose.Schema(
 
     status: {
       type: String,
-      default: "inactive",
+      default: "active",
       enum: ["active", "inactive", "blocked"],
     },
 
@@ -108,7 +108,7 @@ const userSchema = mongoose.Schema(
 
 userSchema.methods.comparePassword = function (password, hash) {
   const isPasswordValid = bcrypt.compareSync(password, hash);
-  console.log(isPasswordValid, password, hash);
+
   return isPasswordValid;
 };
 

@@ -31,12 +31,7 @@ const sendEmail = async (emailId, subject, body) => {
     // text: body,
     html: body,
   };
-  console.log(mailData);
   let info = await transporter.sendMail(mailData);
-
-  console.log("Message sent: %s", info.messageId);
-
-  console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
 
   return info.messageId;
 };

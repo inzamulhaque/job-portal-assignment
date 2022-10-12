@@ -18,6 +18,7 @@ const applicationSchema = mongoose.Schema(
       id: {
         type: ObjectId,
         ref: "Job",
+        required: [true, "Please provide a job id"],
       },
     },
 
