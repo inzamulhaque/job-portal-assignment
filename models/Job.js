@@ -27,9 +27,20 @@ const jobSchema = mongoose.Schema(
       maxLength: [200, "Name is too large"],
     },
 
+    jobType: {
+      type: String,
+      required: [true, "Please provide a jobType"],
+      trim: true,
+    },
+
     companyName: {
       type: String,
       required: [true, "Please provide a companyName"],
+    },
+
+    location: {
+      type: String,
+      required: [true, "Please provide a company location"],
     },
 
     salary: {

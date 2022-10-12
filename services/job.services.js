@@ -1,6 +1,11 @@
 const Job = require("../models/Job");
 const User = require("../models/User");
 
+const getAllJobsServices = async (filters, queries) => {
+  const jobs = await Job.find(filters).sort(queries.sortBy);
+  return jobs;
+};
+
 const createJobServices = async (data) => {
   const createrId = data.createdBy.id;
   const job = await Job.create(data);
@@ -16,4 +21,13 @@ const updateJobServices = async (id, data) => {
   return job;
 };
 
-module.exports = { createJobServices, updateJobServices };
+const getJobByIdServices = async (id) => {
+  return await Job.findById(id).populate("createdBy.id");
+};
+
+module.exports = {
+  createJobServices,
+  updateJobServices,
+  getAllJobsServices,
+  getJobByIdServices,
+};
