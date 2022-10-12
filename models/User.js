@@ -78,7 +78,7 @@ const userSchema = mongoose.Schema(
     appliedJobs: [
       {
         type: ObjectId,
-        ref: "Job",
+        ref: "Application",
       },
     ],
 
