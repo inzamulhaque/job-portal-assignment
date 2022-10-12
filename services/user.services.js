@@ -8,8 +8,8 @@ const signUpServices = async (data) => {
 
   //   this.password = hashedPassword;
   //   this.confirmPassword = undefined;
-  if (!data.password === data.confirmPassword) {
-    return "confirmPassword: Passwords don't match!";
+  if (data.password !== data.confirmPassword) {
+    return "confirmPassword Passwords don't match!";
   }
   const password = data.password;
   const hashedPassword = bcrypt.hashSync(password);

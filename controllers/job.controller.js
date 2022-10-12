@@ -3,7 +3,9 @@ const {
   updateJobServices,
   getAllJobsServices,
   getJobByIdServices,
+  applicationServices,
 } = require("../services/job.services");
+const { findUserByEmail } = require("../services/user.services");
 
 const getAllJobs = async (req, res) => {
   try {
@@ -133,4 +135,27 @@ const updateJobById = async (req, res) => {
   }
 };
 
-module.exports = { createNewJob, updateJobById, getAllJobs, getJobById };
+const applyJob = async (req, res) => {
+  try {
+    const { email } = req.user || {};
+    const resume = req.resumeName;
+    console.log(resume);
+    const user = await findUserByEmail(email);
+
+    const application = await applicationServices(user, req.body, resume);
+  } catch (error) {
+    res.status(500).json({
+      status: "fail",
+      message: "Couldn't get job with this id",
+      error: error.message,
+    });
+  }
+};
+
+module.exports = {
+  createNewJob,
+  updateJobById,
+  getAllJobs,
+  getJobById,
+  applyJob,
+};

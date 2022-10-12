@@ -25,9 +25,14 @@ const getJobByIdServices = async (id) => {
   return await Job.findById(id).populate("createdBy.id");
 };
 
+const applicationServices = async (user, data, resume) => {
+  console.log(resume);
+};
+
 module.exports = {
   createJobServices,
   updateJobServices,
   getAllJobsServices,
   getJobByIdServices,
+  applicationServices,
 };

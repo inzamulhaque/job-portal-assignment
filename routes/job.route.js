@@ -4,9 +4,11 @@ const {
   updateJobById,
   getAllJobs,
   getJobById,
+  applyJob,
 } = require("../controllers/job.controller");
 const verifyToken = require("../middleware/verifyToken");
 const auth = require("../middleware/auth");
+const uploader = require("../middleware/uploader");
 const router = express.Router();
 
 router.get("/", verifyToken, getAllJobs);
@@ -26,5 +28,6 @@ router.patch(
 );
 
 router.get("/:id", verifyToken, getJobById);
+router.post("/:id/apply", verifyToken, uploader.single("resume"), applyJob);
 
 module.exports = router;

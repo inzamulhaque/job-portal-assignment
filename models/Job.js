@@ -10,7 +10,7 @@ const jobSchema = mongoose.Schema(
       email: {
         type: String,
         validate: [validator.isEmail, "Provide a valid Email"],
-        required: [true, "Please provide a Hiring Manager name"],
+        required: [true, "Please provide a Hiring Manager Email"],
       },
       id: {
         type: ObjectId,
@@ -63,15 +63,20 @@ const jobSchema = mongoose.Schema(
       {
         name: String,
 
+        email: {
+          type: String,
+          validate: [validator.isEmail, "Provide a valid Email"],
+        },
+
         id: {
           type: ObjectId,
           ref: "User",
         },
 
-        // applicationId: {
-        //   type: ObjectId,
-        //   ref: "Application",
-        // },
+        applicationId: {
+          type: ObjectId,
+          ref: "Application",
+        },
 
         date: {
           type: Date,

@@ -5,10 +5,9 @@ const getAllJobsServices = async (email) => {
 };
 
 const getJobByIdServices = async (email, id) => {
-  return await Job.findOne({ _id: id, "createdBy.email": email }).populate(
-    "appliedBy.id"
-  );
-  // .populate("appliedBy.applicationId");
+  return await Job.findOne({ _id: id, "createdBy.email": email })
+    .populate("appliedBy.id")
+    .populate("appliedBy.applicationId");
 };
 
 module.exports = { getAllJobsServices, getJobByIdServices };
