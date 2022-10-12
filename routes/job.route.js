@@ -23,7 +23,7 @@ router.post(
 router.patch(
   "/:id",
   verifyToken,
-  (req, res, next) => auth(req, res, next, "hiring-manager"),
+  (req, res, next) => auth(req, res, next, "admin", "hiring-manager"),
   updateJobById
 );
 
