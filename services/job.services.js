@@ -29,6 +29,17 @@ const getJobByIdServices = async (id) => {
 const applicationServices = async (user, data, resume, jobId) => {
   const { _id } = user;
 
+  const jobInfo = await Job.findById(jobId);
+
+  console.log(new Date(jobInfo.deadline));
+  console.log(new Date());
+
+  const expired = new Date() > new Date(jobInfo.deadline);
+  console.log(expired);
+  if (expired) {
+    return "deadline over";
+  }
+
   const alreadyApplied = await Application.findOne({
     "jobInfo.id": jobId,
     candidateId: _id,

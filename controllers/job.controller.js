@@ -159,6 +159,15 @@ const applyJob = async (req, res) => {
       });
     }
 
+    if (application === "deadline over") {
+      if (expired) {
+        return res.status(401).json({
+          status: "fail",
+          error: "deadline over",
+        });
+      }
+    }
+
     res.status(200).json({
       status: "success",
       application,

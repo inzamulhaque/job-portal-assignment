@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Schema.Types;
 const validator = require("validator");
 const date = new Date();
-date.setDate(date.getDate() + 5);
+date.setDate(date.getSeconds() + 1);
 
 const jobSchema = mongoose.Schema(
   {
